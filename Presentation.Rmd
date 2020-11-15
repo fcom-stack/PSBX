@@ -1,11 +1,19 @@
 ---
-title: 'INTRODUCTION'
+title: 'HADOOP ET SPARK'
+author: 'GROUPE 11 : Florine COMLAN, Ramya HOUNTONDJI'
+date: 'PSB 2020'
 output:
   pdf_document: default
   html_document: default
 ---
 
 ![](picture/logo.jpg)
+
+
+\newpage
+
+
+$$ INTRODUCTION $$ 
 
 Vous souhaitez savoir comment fonctionne Hadoop et son écosystème, en particulier Spark dans un projet Big Data ?  Vous êtes au bon endroit  ! D’après le constat des experts, des institutions publiques et privés, 90 % des données récoltées depuis le début de l’humanité ont été générées durant les 2 dernières années. Le marché qualifie aujourd’hui de « Big Data » cette explosion de données. Il devient donc important pour tout un chacun de comprendre les principes de base des outils de gestion et de traitement de ces données massives tels que Hadoop et Spark. Ce document se déclinera suivant le plan suivant:
 
@@ -28,6 +36,9 @@ Vous souhaitez savoir comment fonctionne Hadoop et son écosystème, en particul
 - b. SparkR
 
 
+\newpage
+
+
 # I- Hadoop et le big data
 
 Avant Hadoop, l’approche stratégique utilisée par les entreprises pour gérer leurs données consistait à centraliser le stockage et le traitement des données sur un serveur central dans une architecture client/serveur. Ces données sont gérées dans le serveur par un SGBDR (type Oracle, SQL Server, BD 2, etc).  Le serveur central, ici, est une machine très puissante, conçue sur mesure par des sociétés spécialistes de l’infrastructure informatique comme EMC, Dell, HP ou encore Lenovo. La croissance des données de l’entreprise était gérée par upsizing du serveur, c’est-à-dire par augmentation de la capacité physique de ses composants. Par exemple, l’augmentation de la mémoire, de 124 Go à 256 Go, l’augmentation de la fréquence du processeur, de quadri-core 3 Ghz à Quadri-core 5 GHz, ou l’augmentation de la capacité de stockage du disque dur de 500 Go à 2 To. La figure suivante illustre cette stratégie.
@@ -41,9 +52,10 @@ Figure: approche traditionnelle de gestion des données. Le stockage et le trait
 Malheureusement, bien que de nombreuses entreprises gèrent encore leurs données selon cette stratégie, celle-ci pose plusieurs problèmes dans le contexte actuel :
 
 - La centralisation du stockage et du traitement des données sur un serveur central crée une pression importante sur l’architecture informatique de l’entreprise, ce qui par effet domino augmente le temps de réponse des requêtes aux clients (la latence)
+
 - L’upsizing qui est utilisé pour rendre le serveur central capable de s’adapter à l’augmentation du volume de données (on parle de scalabilité) est limité à la capacité maximale des composants informatiques.Par exemple, vous ne pouvez actuellement pas trouver sur le marché une barrette RAM de 500 Go. Pour atteindre cette capacité, il vous faut ajouter 8 barrettes de 64 Go, ce que la carte mère des serveurs ne prévoit pas toujours, en raison d’un nombre limité de slots
 
-Google fait partie des premières entreprises qui ont très tôt ressenti ces faiblesses. En 2002, son directeur général de l’époque Eric Schmidt, a envoyé une onde de choc dans toute l’industrie de l’IT en annonçant que Google n’avait aucune intention d’acheter le nouveau serveur d’HP doté du tout dernier microprocesseur Itanium développé par Intel. Dans la vision de Google, avec la baisse des coûts d’ordinateurs tels que prédits par la loi de Moore, le futur du traitement informatique reposerait sur la constitution de Data Centers composés de plusieurs machines commodes (les clusters).  Par ce point de vue, Google a introduit une nouvelle stratégie technologique qui va progressivement remplacer l’architecture client/serveur classique.  En 2002, cette vision technologique paraissait ridicule, mais aujourd’hui, elle fait sens. En effet, l’approche proposée par Google consiste à distribuer le stockage des données et à paralléliser leur traitement sur plusieurs PC commodes organisées en cluster (on parle de nœuds). La figure ci-dessous illustre cette nouvelle stratégie. Hadoop est l’une des implémentations logicielles qui permet de mettre en œuvre cette approche.
+Google fait partie des premières entreprises qui ont très tôt ressenti ces faiblesses. Dans leur vision, avec la baisse des coûts d’ordinateurs tels que prédits par la loi de Moore, le futur du traitement informatique reposerait sur la constitution de Data Centers composés de plusieurs machines commodes (les clusters).  Par ce point de vue, Google a introduit une nouvelle stratégie technologique qui va progressivement remplacer l’architecture client/serveur classique.  En 2002, cette vision technologique paraissait ridicule, mais aujourd’hui, elle fait sens. En effet, l’approche proposée par Google consiste à distribuer le stockage des données et à paralléliser leur traitement sur plusieurs PC commodes organisées en cluster (on parle de nœuds). La figure ci-dessous illustre cette nouvelle stratégie. Hadoop est l’une des implémentations logicielles qui permet de mettre en œuvre cette approche.
 
 
 ![](picture/architecture2.png)
@@ -120,7 +132,7 @@ Supposons que vous ayez vos données stockées dans un cluster HDFS sur lequel v
 
 # IV- Hadoop vs Spark
 
-•	Qu’est ce que Sparks  
+•	Qu’est ce que Spark  
 
 Spark est un moteur de traitement parallèle de données open source permettant d’effectuer des analyses de grandes envergures par le biais de machines en clusters. 
 Il a  été développé pour répondre aux limites de cadre de traitement. L’objectif était de créer un outil plus rapide et plus généralisé, qui pourrait être utilisé dans le cadre de traitrement multi-pass.
@@ -187,21 +199,21 @@ Cliquez sur ce lien <https://docs.docker.com/get-docker/> et suivez la procédur
 
 Vérifiez la version installée avec :
 
-* ``` docker --version ```
+``` docker --version ```
 
 **Etape 2: Télécharger l'image docker uploadée sur dockerhub**
 
-Cette image contient l'executable qui permet d'installer Hadoop (2.7.2), Spark (2.2.1), Kafka (2.11-1.0.2) and HBase (1.4.8).
+Cette image contient l'executable qui permet d'installer Hadoop (2.7.2), Spark (2.2.1), Kafka (2.11-1.0.2) et HBase (1.4.8).
 
 * ```docker pull liliasfaxi/spark-hadoop:hv-2.7.2```
 
 **Etape 3: Créer les trois contenaires à partir de l'image téléchargée. Pour cela:**
 
- Créer un réseau qui permettra de relier les trois contenaires:
+* Créer un réseau qui permettra de relier les trois contenaires:
 	
-* ```docker network create --driver=bridge hadoop```
+```docker network create --driver=bridge hadoop```
 
- Créer et lancer les trois contenaires (les instructions -p permettent de faire un mapping entre les ports de la machine hôte et ceux du contenaire):
+* Créer et lancer les trois contenaires (les instructions -p permettent de faire un mapping entre les ports de la machine hôte et ceux du contenaire):
 	
  
 ```
@@ -224,15 +236,15 @@ docker run -itd -p 8041:8042 --net=hadoop \
 
 **Etape 4: Entrer dans le contenaire master pour commencer à l'utiliser.**
 
-* ```docker exec -it hadoop-master bash ```
+```docker exec -it hadoop-master bash ```
 
 Le résultat de cette exécution sera le suivant:
 
-* ```root@hadoop-master:~#```
+```root@hadoop-master:~#```
 
-Vous vous retrouverez dans le shell du namenode, et vous pourrez ainsi manipuler le cluster à votre guise. La première chose à faire, une fois dans le contenaire, est de lancer hadoop. Un script est fourni pour cela. Lancer ce script.
+Vous vous retrouverez dans le shell du namenode, et vous pourrez ainsi manipuler le cluster à votre guise. La première chose à faire, une fois dans le contenaire, est de lancer hadoop. Un script est fourni pour cela. Lancer ce script:
 
-* ```./start-hadoop.sh```
+```./start-hadoop.sh```
 
 Toutes les commandes interagissant avec le système Hadoop commencent par hadoop fs. Ensuite, les options rajoutées sont très largement inspirées des commandes Unix standard.
 
@@ -240,21 +252,21 @@ Toutes les commandes interagissant avec le système Hadoop commencent par hadoop
 
 Pour ce faire, nous allons utiliser le fichier purchases.txt.Ce fichier se trouve sous le répertoire principal de votre machine master.
 
- Créer un répertoire dans HDFS, appelé input. Pour cela, taper:
+* Créer un répertoire dans HDFS, appelé input. Pour cela, taper:
 
-* ```hadoop fs –mkdir -p input```
+```hadoop fs –mkdir -p input```
 
- Charger le fichier purchase.txt dans le répertoire input que vous avez créé:
+* Charger le fichier purchase.txt dans le répertoire input que vous avez créé:
 	
-* ```hadoop fs –put purchases.txt input```
+```hadoop fs –put purchases.txt input```
 
- Pour afficher le contenu du répertoire input, la commande est:
+* Pour afficher le contenu du répertoire input, la commande est:
 
-* ```hadoop fs –ls input```
+```hadoop fs –ls input```
 
- Pour afficher les dernières lignes du fichier purchases:
+* Pour afficher les dernières lignes du fichier purchases:
 
-* ```hadoop fs -tail input/purchases.txt```
+```hadoop fs -tail input/purchases.txt```
 
 Vous touverez dans le tableau ci-dessous les commandes les plus utilisées pour manipuler les fichiers dans HDFS
 
@@ -271,3 +283,22 @@ Le port 50070: permet d'afficher les informations de votre namenode:
  Le port 8088: permet d'afficher l'avancement et les résultats de vos Jobs (Map Reduce ou autre):
 
 * ```http://localhost:8088```
+
+
+\newpage
+
+$$ REFERENCES $$
+
+
+
+- <https://www.data-transitionnumerique.com/introduction-a-hadoop-et-l-ecosysteme-big-data/>
+
+- <https://insatunisia.github.io/TP-BigData/tp1/index.html>
+
+- <https://medium.com/takwimulab/mapreduce-le-framework-de-traitement-de-données-de-hadoop-f7624846440a>
+
+- <https://www.lebigdata.fr/apache-spark-tout-savoir>
+
+- <https://www.infoq.com/fr/articles/apache-spark-introduction/>
+
+- <https://www.alphorm.com/tutoriel/formation-en-ligne-big-data-avec-apache-spark-initiation/tuto-video-comprendre-larchitecture-des-applications-de-spark>
