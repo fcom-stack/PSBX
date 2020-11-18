@@ -45,9 +45,9 @@ Avant Hadoop, l’approche stratégique utilisée par les entreprises pour gére
 
 
 ![](picture/architecture1.png)
-Figure: approche traditionnelle de gestion des données. Le stockage et le traitement des données sont centralisées dans un serveur.
+Figure: approche traditionnelle de gestion des données. 
 
-
+Le stockage et le traitement des données sont centralisées dans un serveur.
 
 Malheureusement, bien que de nombreuses entreprises gèrent encore leurs données selon cette stratégie, celle-ci pose plusieurs problèmes dans le contexte actuel :
 
@@ -55,12 +55,14 @@ Malheureusement, bien que de nombreuses entreprises gèrent encore leurs donnée
 
 - L’upsizing qui est utilisé pour rendre le serveur central capable de s’adapter à l’augmentation du volume de données (on parle de scalabilité) est limité à la capacité maximale des composants informatiques.Par exemple, vous ne pouvez actuellement pas trouver sur le marché une barrette RAM de 500 Go. Pour atteindre cette capacité, il vous faut ajouter 8 barrettes de 64 Go, ce que la carte mère des serveurs ne prévoit pas toujours, en raison d’un nombre limité de slots
 
-Google fait partie des premières entreprises qui ont très tôt ressenti ces faiblesses. Dans leur vision, avec la baisse des coûts d’ordinateurs tels que prédits par la loi de Moore, le futur du traitement informatique reposerait sur la constitution de Data Centers composés de plusieurs machines commodes (les clusters).  Par ce point de vue, Google a introduit une nouvelle stratégie technologique qui va progressivement remplacer l’architecture client/serveur classique.  En 2002, cette vision technologique paraissait ridicule, mais aujourd’hui, elle fait sens. En effet, l’approche proposée par Google consiste à distribuer le stockage des données et à paralléliser leur traitement sur plusieurs PC commodes organisées en cluster (on parle de nœuds). La figure ci-dessous illustre cette nouvelle stratégie. Hadoop est l’une des implémentations logicielles qui permet de mettre en œuvre cette approche.
+Google fait partie des premières entreprises qui ont très tôt ressenti ces faiblesses. Dans leur vision, avec la baisse des coûts d’ordinateurs tels que prédits par la loi de Moore, le futur du traitement informatique reposerait sur la constitution de Data Centers composés de plusieurs machines commodes (les clusters).  Par ce point de vue, Google a introduit une nouvelle stratégie technologique qui va progressivement remplacer l’architecture client/serveur classique.  En 2002, cette vision technologique paraissait ridicule, mais aujourd’hui, elle fait sens. En effet, l’approche proposée par Google consiste à distribuer le stockage des données et à paralléliser leur traitement sur plusieurs PC commodes organisées en cluster (on parle de nœuds). Chaque nœud est constitué de machines standard regroupées en grappe. La figure ci-dessous illustre cette nouvelle stratégie. 
 
 
 ![](picture/architecture2.png)
-Figure: architecture distribuée – cluster computing. Le stockage des données est distribuée dans les noeuds d’un cluster et leur traitement y est parallélisé.
+Figure: architecture distribuée – cluster computing.
 
+
+Hadoop est l’une des implémentations logicielles qui permet de mettre en œuvre cette approche. Hadoop a été inspiré par l'architecture proposée par Google. Créé par Doug Cutting, Hadoop fait partie des projets de la fondation logicielle Apache depuis 2009. C’est un framework libre et open source ecrit en Java destiné à faciliter la création d'applications distribuées (au niveau du stockage des données et de leur traitement) et scalables permettant aux applications de travailler avec des milliers de nœuds et des pétaoctets de données. 
 
 Ainsi, pour aborder des projets Big Data, d’un point de vue strictement architectural, la stratégie de distribution du stockage de données et de parallélisme de leur traitement sur un cluster est une bien meilleure stratégie que la stratégie d’architecture client/serveur classique. De plus, avec la baisse des coûts du matériel informatique, les coûts d’acquisition et d’évolution d’un cluster peuvent potentiellement revenir moins chers à terme que ceux d’un serveur central.
 
@@ -74,7 +76,6 @@ A ce jour, l’écosystème Hadoop est composé d’une centaines de technologie
 
 - Le système de fichier distribué, par exemple le HDFS d’Hadoop, qui gère le stockage distribué des données et fournit la tolérance aux pannes nécessaire lors de l’exploitation d’un cluster.
 - le modèle de calcul, comme MapReduce, qui est la façon dont les données sont parallélisés dans les noeuds du cluster
-- le gestionnaire de ressources, comme YARN, qui permet de faire tourner plusieurs moteurs de calcul dans le cluster et d’exploiter son potentiel à son maximum.
 
 
 ## a. Hadoop Distributed File System
@@ -99,7 +100,7 @@ La réplication de données est une partie essentielle du format HDFS. Comme le 
    
 MapReduce est un modèle de programmation créé par Google pour le traitement et la génération de larges ensembles de données sur des clusters d’ordinateurs. Il s’agit d’un composant central du Framework logiciel Apache Hadoop, qui permet le traitement résilient et distribué d’ensembles de données non structurées massifs sur des clusters d’ordinateurs, au sein desquels chaque nœud possède son propre espace de stockage. 
 
-Chaque algorithme de traitement de données basé sur MapReduce ou encore job mapReduce doit contenir deux types de programmes :
+Chaque algorithme de traitement de données basé sur MapReduce doit contenir deux types de programmes :
 
 - Les Mappers : Ce sont des fonctions qui reçoivent en entrée les données à traiter et produisent pour chaque ligne de données, un résultat sous forme d'une paire (clé,valeur).
 - Les Reducers : Ces fonctions reçoivent les résultats des mappers et les réduisent au moyen de diverses sortes d'opérations afin d'en obtenir un résultat plus concis correspondant à celui attendu par l'utilisateur.
@@ -109,17 +110,29 @@ Voici en image, un aperçu des étapes d'un job MapReduce :
 ![](picture/mapReduce.png)
 
 
-Supposons que vous ayez vos données stockées dans un cluster HDFS sur lequel vous exécutez un job MapReduce. L’exécution d’un programme se déroulera selon les étapes suivantes :
+Supposons que vous ayez vos données stockées dans un cluster HDFS sur lequel vous exécutez un job MapReduce. 
+
+![](picture/MR1.png)
+
+
+L’exécution d’un programme se déroulera selon les étapes suivantes :
 
 - La phase d'input : Les données HDFS sont lues et transmisses bloc par bloc chacune à un processus map séparé qui travaille uniquement sur les données qui lui sont assignées.
 
-- La phase Map : Pendant cette phase, les instances de notre fonction map (que nous avons définie) s'exécute sur les blocs de données parallèllement et produit 0 ou plusieurs paires de (clé, valeur) appelées clés intermédiaires. Nous verrons un peu plus bas à quoi correspondent ces clés, ces valeurs mais aussi le contenu d'un programme MapReduce.
+- La phase Map : Pendant cette phase, les instances de notre fonction map (que nous avons définie) s'exécute sur les blocs de données parallèllement et produit 0 ou plusieurs paires de (clé, valeur) appelées clés intermédiaires.
 
-- La phase combiner (optionnelle) : Écrire une fonction combiner n'est pas indispensable dans un programme MapReduce mais elle est utilisée pour réduire la taille des résultats du Mapper avant qu'ils soient transmis aux reducers.
+![](picture/MR2.png)
+
 
 - La phase Shuffle and Sort : Cette étape est automatiquement réalisée par MapReduce sans besoin qu'une fonction soit définie par l'utilisateur. Ici, MapReduce regroupe ensemble les résultats des différents mappers puis les trie par ordre croissant de leurs clés avant de les assigner, groupe par groupe à différents reducers.
 
+![](picture/MR3.png)
+
+
 - La phase Reducer : Un reducer est une fonction définie par l'utilisateur (tout comme un mappr) qui combine les groupes de paires (clé,valeur) en utilisant plusieurs techniques de filtrage,de sommage ou tout autre type d'opérations de groupage. Le reducer renvoie un set généralement très concis de paires (clé,valeur) à la dernière phase.
+
+![](picture/MR4.png)
+
 
 - La phase d'Output : Dans cette phase, les résultats du reducer sont lus et affichés à l'utilisateur ou (plus fréquemment) écrits dans un fichier.
 
