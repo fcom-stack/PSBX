@@ -17,5 +17,5 @@ V- Comment installer Hadoop avec Docker?
   	
 VI- Packages
   
-  * a. RHadoop
+  * a. rmr2 de RHadoop
   * b. SparkR
