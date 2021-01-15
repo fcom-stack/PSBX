@@ -17,5 +17,5 @@ V- Comment installer Hadoop avec Docker?
 
 Des tutoriels sur les packages rmr2 (en rapport au mapReduce de Hadoop) et sparklyr (en rapport à Spark) ont aussi été ajouté afin de passer de la théorie à la pratique: 
   
- * a. rmr2 de RHadoop
- * b. SparkR
+ * a. rmr2
+ * b. sparlklyr
